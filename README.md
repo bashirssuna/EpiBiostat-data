@@ -1,4 +1,4 @@
-# Data for *Epidemiology and Biostatistics for Masters Students using R and STATA*
+# Data for *Epidemiology and Biostatistics for Masters Students using R and Stata*
 
 Revised Edition, by Dr. Bashir Ssuna (Makerere University School of Public Health;
 Makerere Epidemiology and Statistical Center). Revised by Prof. Noah Kiwanuka, PhD
@@ -6,7 +6,7 @@ Makerere Epidemiology and Statistical Center). Revised by Prof. Noah Kiwanuka, P
 
 This repository holds the data for the book's worked examples: ten datasets in 17 files,
 in the [`data`](data) folder. This page shows how to get the files and how to load each
-one in STATA and in R.
+dataset in Stata and in R.
 
 ## Two ways to use the data
 
@@ -17,16 +17,18 @@ one in STATA and in R.
 
 The book's commands load each file from `D:/Statistics Book/book/data`, the folder on
 the author's computer. Whichever way you choose, the only part of the book's code you
-change is that folder.
+change is that folder (and, from the internet, the space in one file name: see Step 3).
 
 ## Step 1. Download the files
 
 1. Open <https://github.com/bashirssuna/EpiBiostat-data>.
 2. Click the green **Code** button, then **Download ZIP**.
-3. Unzip the file (on Windows, right-click it and choose **Extract All**). You get a
-   folder called `EpiBiostat-data-main`. Rename it `EpiBiostat-data` and move it to
-   `C:/`, so that the data files sit in `C:/EpiBiostat-data/data`. Any other folder
-   works too; use its path in Step 2.
+3. Unzip the file (on Windows, right-click it and choose **Extract All**). Windows
+   usually puts a folder `EpiBiostat-data-main` inside another folder of the same name.
+   Open the folders until you reach the one that holds `README.md` and the `data`
+   folder, rename that one `EpiBiostat-data` and move it to `C:/`, so that the data
+   files sit in `C:/EpiBiostat-data/data`. Any other folder works too; use its path in
+   Step 2.
 
 To download a single file, open the `data` folder, click the file's name, then click
 **Download raw file** (the downward arrow above the file, on the right).
@@ -78,13 +80,13 @@ d <- haven::read_dta("https://raw.githubusercontent.com/bashirssuna/EpiBiostat-d
 A web address cannot contain a space, so in an address write `Linear regression.dta` as
 `Linear%20regression.dta`.
 
-## Load commands for every file
+## Load commands for every dataset
 
-Put the location in one place, then run the line for the data you need. Each STATA
+Put the location in one place, then run the line for the data you need. Each Stata
 command replaces the data in memory; each R command makes the data frame named on the
 left.
 
-**STATA** (version 14 or later)
+**Stata** (version 14 or later)
 
 ```stata
 * Run ONE of these two lines: your folder, or the internet
@@ -93,6 +95,7 @@ global bookdata "https://raw.githubusercontent.com/bashirssuna/EpiBiostat-data/m
 
 import delimited "$bookdata/antibiotics.csv", clear
 import delimited "$bookdata/its_lcg.csv", clear
+* From the internet, write Linear%20regression.dta in the next line
 use "$bookdata/Linear regression.dta", clear
 label define Sex 1 "Female", modify
 import delimited "$bookdata/wdbc.csv", clear
@@ -116,6 +119,7 @@ bookdata <- "https://raw.githubusercontent.com/bashirssuna/EpiBiostat-data/main/
 
 d      <- read.csv(file.path(bookdata, "antibiotics.csv"))
 d      <- read.csv(file.path(bookdata, "its_lcg.csv"))
+# From the internet, write Linear%20regression.dta in the next line
 d      <- haven::read_dta(file.path(bookdata, "Linear regression.dta"))
 d$Sex  <- factor(d$Sex, levels = 1:2, labels = c("Female", "Male"))
 wdbc   <- read.csv(file.path(bookdata, "wdbc.csv"))
@@ -132,12 +136,12 @@ epi    <- read.csv(file.path(bookdata, "epilepsy.csv"))
 Notes on these commands:
 
 - **From the internet, `Linear regression.dta` needs `%20`.** Write
-  `"$bookdata/Linear%20regression.dta"` in STATA and
+  `"$bookdata/Linear%20regression.dta"` in Stata and
   `file.path(bookdata, "Linear%20regression.dta")` in R.
 - **The `Sex` label.** In `Linear regression.dta` the value label for `Sex` = 1 is
   spelled `Femele`. The line after each load corrects it, as the book's code does.
 - **Two formats, same values.** Where a dataset comes as both `.dta` and `.csv`, the two
-  files hold the same values. The book's STATA code reads the `.dta` file. Its R code
+  files hold the same values. The book's Stata code reads the `.dta` file. Its R code
   reads the `.csv` file, except for the myeloma data, and the wide pig weights in
   Sections 9.3 and 9.8, which it reads from the `.dta` file.
 - **`haven`.** R reads `.dta` files with the `haven` package. Some chapters run
@@ -151,10 +155,10 @@ and from the internet.
 
 | File | What it holds | Size | Used in | Source |
 |---|---|---|---|---|
-| `antibiotics.csv` | The author's trial of prophylactic antibiotics against none | 260 patients | Section 5.5 | The author's own trial; only the allocated arm and the outcome are kept |
+| `antibiotics.csv` | The author's trial of prophylactic antibiotics against none | 260 patients | Section 5.5 | The author's own trial, shared by the author for teaching with this book; only the allocated arm and the outcome are kept, with no names, dates or other personal details |
 | `its_lcg.csv` | A monthly interrupted time series | 48 months | Section 5.6 | Simulated for the book (not a hospital's data) |
 | `Linear regression.dta` | Forced expiratory volume and its predictors | 60 adults | Section 7.1 | The author's teaching dataset |
-| `wdbc.csv` | Wisconsin breast tumours: 30 measurements of the cell nuclei | 569 tumours | Sections 7.3, 10.1, 10.2 | Street WN, Wolberg WH, Mangasarian OL. Nuclear feature extraction for breast tumor diagnosis. Proc SPIE. 1993;1905:861-870 (UCI Machine Learning Repository) |
+| `wdbc.csv` | Wisconsin breast tumours: 30 measurements of the cell nuclei | 569 tumours | Sections 7.3, 10.1, 10.2 | Street WN, Wolberg WH, Mangasarian OL. Nuclear feature extraction for breast tumor diagnosis. Proc SPIE. 1993;1905:861-870. Distributed by the UCI Machine Learning Repository (doi:10.24432/C5DW2B) under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/); this copy adds a header row of column names and numbers the tumours 1 to 569 in place of their original ID numbers |
 | `multiple_myeloma.dta`, `multiple_myeloma.csv` | Survival of patients with multiple myeloma; `sex` 1 female, 2 male; `bj` (Bence-Jones protein) 0 no, 1 yes | 48 patients | Chapter 8 | Krall JM, Uthoff VA, Harley JB. A step-up procedure for selecting variables associated with survival. Biometrics. 1975;31(1):49-57 |
 | `pigs.dta`, `pigs.csv`, `piglong.dta` | Weekly weights of pigs over nine weeks, wide and long | 48 pigs (432 rows long) | Sections 9.1, 9.3, 9.4, 9.8 | Diggle PJ, Heagerty P, Liang KY, Zeger SL. Analysis of Longitudinal Data. 2nd ed. Oxford University Press; 2002 |
 | `cd4trial.dta`, `cd4trial.csv` | AIDS trial: log CD4 counts at up to six visits | 1308 patients, 4391 visits | Sections 9.1, 9.2, 9.4 | Henry K, Erice A, Tierney C, et al. J Acquir Immune Defic Syndr Hum Retrovirol (ACTG 193A trial) |
@@ -166,27 +170,30 @@ Appendix B of the book describes every variable.
 
 ## Data the software fetches itself
 
-Some examples use data that come with STATA or R, so they are not in this repository.
+Some examples use data that come with Stata or R, so they are not in this repository.
 Appendix B, Section B.2 of the book describes them.
 
-- **STATA:** `sysuse auto`, installed with STATA, and the Stata Press example datasets
+- **Stata:** `sysuse auto`, installed with Stata, and the Stata Press example datasets
   that `webuse` downloads: `catheter`, `diet`, `dollhill3`, `epilepsy`, `fuel`, `hanley`,
   `iris`, `lbw`, `rate2` and `stan3`. `webuse` needs an internet connection.
 - **R:** `iris`, `mtcars`, `PlantGrowth` and `sleep`, which come with R, and three
   datasets in packages: `birthwt` in `MASS`, which comes with R, and `popmis` in `mice`
   and `api` in `survey`, which you install once with
   `install.packages(c("mice", "survey"))`.
+- **R reading Stata's example files:** five R listings (Sections 5.4, 7.2 and 7.4, and
+  two in Chapter 8) read `diet`, `auto`, `epilepsy`, `stan3` and `catheter` from the
+  Stata Press website with `haven`, so they also need an internet connection.
 
 ## When a file will not load
 
-- **STATA says `file ... not found`.** Check the folder in the path; `pwd` shows the
-  folder STATA is working in. Keep the quotation marks around
+- **Stata says `file ... not found`.** Check the folder in the path; `pwd` shows the
+  folder Stata is working in. Keep the quotation marks around
   `"Linear regression.dta"`, whose name has a space.
 - **R says `cannot open file` or `does not exist`.** Check the folder; `getwd()` shows
   R's working folder. Use forward slashes.
 - **R says `there is no package called 'haven'`.** Run `install.packages("haven")` once.
-- **An old STATA refuses a `.dta` file.** The `.dta` files need STATA 14 or later. With
-  an older STATA, load the `.csv` file where there is one.
+- **An old Stata refuses a `.dta` file.** The `.dta` files need Stata 14 or later. With
+  an older Stata, load the `.csv` file where there is one.
 - **Reading from the internet fails.** Check the connection, and spell the file name
   exactly, capitals included. Some institutional networks block such downloads; if
   yours does, download the files (Step 1) and load them from your folder.
