@@ -26,11 +26,11 @@ ten datasets in 17 files, in the `data` folder.
 3. You can also read a file straight from the internet:
 
    ```stata
-   use "https://raw.githubusercontent.com/GITHUB_USER/EpiBiostat-data/main/data/multiple_myeloma.dta", clear
+   use "https://raw.githubusercontent.com/bashirssuna/EpiBiostat-data/main/data/multiple_myeloma.dta", clear
    ```
 
    ```r
-   d <- haven::read_dta("https://raw.githubusercontent.com/GITHUB_USER/EpiBiostat-data/main/data/multiple_myeloma.dta")
+   d <- haven::read_dta("https://raw.githubusercontent.com/bashirssuna/EpiBiostat-data/main/data/multiple_myeloma.dta")
    ```
 
 Where a dataset comes in both formats, the book's STATA code reads the `.dta` file and
