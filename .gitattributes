@@ -1,0 +1,2 @@
+*.dta binary
+*.csv text eol=lf
